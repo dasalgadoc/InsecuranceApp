@@ -1,0 +1,92 @@
+{% extends "main_app/base.html" %}
+
+<!-- Inject code in block -->
+{% block head_content %}
+    <title> Todo Riesgo: Proyecto Fraude - Seguros Bolívar </title>
+{% endblock %}
+
+{% block container %}
+    <h1> Seguros todo riesgo: 
+        <small>Siniestros relacionados a puntaje </small>
+    </h1>
+    <section class="content">
+        <div class="col-sm-6 col-lg-2">
+            <div class="box">
+                <div class="box-header with-border">
+                    <i class="fa fa-line-chart"></i>
+                    <h3 class="box-title">Puntaje</h3>
+                </div>
+                <div class="box-body">
+                    <form method="POST" action="{% url 'all_risk:2' %}">               
+                        {% csrf_token %}
+                        <div class="form-group" >
+                            <input type="number" class="form-control" id="score" name="score" step="0.01" placeholder="Ingresar">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" 
+                                class="btn btn-primary pull-right">
+                                <i class="fa fa-cubes"></i> Consultar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+       
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-10">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <i class="fa fa-ellipsis-h"></i>
+                    <h3 class="box-title">Siniestros por puntaje</h3>
+  
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                              title="Ocultar/Mostrar">
+                        <i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    {% if scores %}
+                        <table id="scores_table" class="table table-bordered table-striped" >
+                            <thead>
+                                <th align="center">Póliza</th>
+                                <th align="center">Departamento póliza</th>
+                                <th align="center">Departamento siniestro</th>
+                                <th align="center">Marca</th>
+                                <th align="center">Línea</th>
+                                <th align="center">Reclamos anteriores</th>
+                                <th align="center">Valor Asegurado</th>
+                                <th align="center">Incurrido</th>
+                                
+                            </thead>
+                            <tbody>
+                                {% for row in data %}
+                                    <tr>
+                                        <td>{{ row.NUMERO_SECUENCIA_POLIZA }}</td>
+                                        <td>{{ row.DEPARTAMENTO_RIESGO }}</td>
+                                        <td>{{ row.DEPARTAMENTO_SINIESTRO }}</td>
+                                        <td>{{ row.MARCA_VEHICULO }}</td>
+                                        <td>{{ row.LINEA }}</td>
+                                        <td>{{ row.RECLAMOS_ANTERIORES }}</td>
+                                        <td>{{ row.VALOR_ASEGURADO_VEHICULO }}</td>
+                                        <td>{{ row.INCURRIDO }}</td>
+                                       
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Digite un número de puntaje para recuperar la cantidad de siniestros con un número menor o igual al digitado. </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if scores %}
+        <script type="text/javascript">
+            $(function () {
+                $('#scores_table').DataTable()
+            })
+        </script>
+    {% endif %}
+{% endblock %}

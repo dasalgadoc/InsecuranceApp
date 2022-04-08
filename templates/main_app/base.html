@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Generate a Template Block to custom header in each .html file|  -->
+        {% block head_content %} {% endblock %}
+        
+        <!-- Load static files (e.g css, js, etc) -->
+        {% load static %}
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
+        <link rel="stylesheet" href="{% static 'css/AdminLTE.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/all.css' %}">
+        <link rel="stylesheet" href="{% static 'css/skins/_all-skins.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+        <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap.min.css' %}">
+
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css'  %}">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+        <script src="{% static 'js/jquery1.12.4.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/adminlte.min.js' %}"></script>
+        <script src="{% static 'js/icheck.min.js' %}"></script>
+        <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'js/dataTables.bootstrap.min.js' %}"></script>
+
+    </head>
+    <body class="hold-transition skin-blue-light sidebar-mini">
+        <div class="wrapper">
+            
+            {% include 'main_app/navbar.html' %}
+
+            {% include 'main_app/menu.html' %}
+
+            <div class="content-wrapper">
+                <section class="content-header">
+                    {% block container %}
+                    {% endblock%}
+                </section>
+            </div>   
+        </div>    
+    </body>
+</html>

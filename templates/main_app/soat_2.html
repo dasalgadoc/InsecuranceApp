@@ -1,0 +1,589 @@
+{% extends "main_app/base.html" %}
+
+<!-- Inject code in block -->
+{% block head_content %}
+    <title> Todo Riesgo: Proyecto Fraude - Seguros Bolívar </title>
+{% endblock %}
+
+{% block container %}
+    <h1> Seguros SOAT: 
+        <small> Iteración 2 </small>
+    </h1>
+    <section class="content">
+        <!-- FORMULARIO -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="fa fa-line-chart"></i>
+                        <h3 class="box-title">Formulario Siniestro</h3>
+                        
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row" style="margin-right: 1em;">
+                            <button type="submit" class="btn btn-info pull-right" onclick="getDemo()"><i class="fa fa-laptop"></i>   Cargar Demo</button>
+                        </div>
+                        <form method="POST" action="{% url 'soat:s2' %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4><i class="fa fa-user-plus"></i><strong>   Datos Asegurado</strong></h4>
+                                    <div class="form-group form_padding">
+                                        <label>Código CIIU:</label>
+                                        <input type="number" class="form-control" id="city_insured" name="city_insured" placeholder="Ingrese código"  >
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Género: </label>
+                                                <select class="form-control select2bs4" name="sex_insured" id="sex_insured">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'SEXO' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Edad: </label>
+                                                <input type="range" min="16" max="100" value="20" class="form-control custom_slider" id="age_insured" name="age_insured">
+                                                <span id="age_insured_span" class="pull-right"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Tipo documento: </label>
+                                                <select class="form-control select2bs4" name="document_insured" id="document_insured">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'TIPO_DOC' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Estrato: </label>
+                                                <input type="range" min="0" max="6" value="3" class="form-control custom_slider" id="stratum_insured" name="stratum_insured">
+                                                <span id="stratum_insured_span" class="pull-right"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Estado Civil: </label>
+                                                <select class="form-control select2bs4" name="civil_insured" id="civil_insured">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'ESTADO_CIVIL' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Actividad Económica: </label>
+                                                <input type="text" class="form-control" id="activity_insured" name="activity_insured" placeholder="Actividad Económica">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Empresa: </label>
+                                                <input type="text" class="form-control" id="enterprise_insured" name="enterprise_insured" placeholder="Empresa">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Vinculación: </label>
+                                                <select class="form-control select2bs4" name="job_insured" id="job_insured">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'VINCULACION_LABORAL' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Cargo: </label>
+                                                <input type="text" class="form-control" id="charge_insured" name="charge_insured" placeholder="Cargo">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Tomador-Asegurado iguaL: </label>
+                                                <div class="col-lg-offset-6">
+                                                    <label>No</label>
+                                                        <label class="custom_switch">
+                                                            <input type="checkbox" id="taken_insured" name="taken_insured" >
+                                                            <span class="custom_toggle round"></span>
+                                                        </label>
+                                                    <label>Sí</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Egresos: </label>
+                                                <input type="number" class="form-control" id="expenses_insured" name="expenses_insured" step="0.1" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Ingresos: </label>
+                                                <input type="number" class="form-control" id="income_insured" name="income_insured" step="0.1" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Activo: </label>
+                                                <input type="number" class="form-control" id="assets_insured" name="assets_insured" step="0.1" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Pasivo: </label>
+                                                <input type="number" class="form-control" id="passives_insured" name="passives_insured" step="0.1" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form_padding">
+                                        <label>Patrimonio: </label>
+                                        <input type="number" class="form-control" id="heritage_insured" name="heritage_insured" step="0.1" placeholder="Ingrese valor"  >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <h4><i class="fa fa-file-text"></i><strong>   Datos póliza</strong></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Departamento: </label>
+                                                <select class="form-control select2bs4" name="state_policy" id="state_policy">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'DEPARTAMENTO' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Ciudad: </label>
+                                                <select class="form-control select2bs4" name="city_policy" id="city_policy">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'CIUDAD' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Número endoso: </label>
+                                                <input type="number" class="form-control" id="end_policy" name="end_policy" step="0.1" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Código riesgo: </label>
+                                                <input type="text" class="form-control" id="risk_policy" name="risk_policy" placeholder="Código riesgo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Tipo Documento tomador: </label>
+                                                <select class="form-control select2bs4" name="document_policy" id="document_policy">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'TIPO_DOC' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Género tomador: </label>
+                                                <select class="form-control select2bs4" name="sex_policy" id="sex_policy">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'SEXO' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Valor asegurado: </label>
+                                                <input type="number" class="form-control" id="amount_policy" name="amount_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Cantidad coberturas: </label>
+                                                <input type="number" class="form-control" id="covert_policy" name="covert_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Cantidad reservas: </label>
+                                                <input type="number" class="form-control" id="reserv_policy" name="reserv_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Cantidad siniestros: </label>
+                                                <input type="number" class="form-control" id="sinister_policy" name="sinister_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Relación valor ingresos: </label>
+                                                <input type="number" class="form-control" id="related_policy" name="related_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Renovaciones: </label>
+                                                <input type="number" class="form-control" id="revenue_policy" name="revenue_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <h4><i class="fa fa-car"></i><strong>   Datos Vehículo</strong></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Marca: </label>
+                                                <select class="form-control select2bs4" name="brand_vehicle" id="brand_vehicle">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'MARCA_VEHICULO' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Modelo: </label>
+                                                <input type="range" min="1900" max="2025" value="2010" class="form-control custom_slider" id="model_vehicle" name="model_vehicle">
+                                                <span id="model_vehicle_span" class="pull-right"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4><i class="fa fa-remove"></i><strong>   Datos Siniestro</strong></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Departamento: </label>
+                                                <select class="form-control select2bs4" name="state_sinister" id="state_sinister">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'DEPARTAMENTO' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> 
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Ciudad: </label>
+                                                <select class="form-control select2bs4" name="city_sinister" id="city_sinister">
+                                                    {% for element in selects %}
+                                                        {% if element.parameter_key == 'CIUDAD' %}
+                                                            <option value="{{ element.parameter_value }}">{{ element.parameter_verbose }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Diferencia Siniestro (días): </label>
+                                                <input type="number" class="form-control" id="difend_sinister" name="difend_sinister" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group form_padding">
+                                                <label>Diferencia aviso (días): </label>
+                                                <input type="number" class="form-control" id="difano_sinister" name="difano_sinister" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form_padding">
+                                        <label>Poliza-Siniestro municipio igual: </label>
+                                        <div class="col-lg-offset-6">
+                                            <label>No</label>
+                                            <label class="custom_switch">
+                                                <input type="checkbox" id="citypo_sinister" name="citypo_sinister" >
+                                                <span class="custom_toggle round"></span>
+                                            </label>
+                                            <label>Sí</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-left: 1em; margin-right: 1em;">
+                                <button name="locatePoint" type="submit" class="btn btn-success pull-right" > 
+                                    <i class="fa fa-mail-reply"></i>  Calcular grupo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- TABLA -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-danger">
+                    <div class="box-header">
+                        <i class="fa fa-table"></i>
+                        <h3 class="box-title">Tabla Clusters</h3>
+                        
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table id="cluster_table" class="table table-bordered table-striped">
+                            <thead>
+                                <th align="center" > Secuencia Póliza </th>
+                                <th align="center" > Número Póliza </th>
+                                <th align="center" > Número Siniestro </th>
+                                <th align="center" > Tipo Doc. Tomador </th>
+                                <th align="center" > Tipo Doc. Asegurado </th>
+                                <th align="center" > Municipio </th>
+                                <th align="center" > Departamento </th>
+                                <th align="center" > Fecha Siniestro </th>
+                                <th align="center" > Fecha aviso </th>
+                                <th align="center" > Código Cobertura </th>
+                                <th align="center" > Código Reserva </th>
+                                <th align="center" > Fecha Mov. </th>
+                                <th align="center" > V. Incurrido </th>
+                                <th align="center" > V. Liquidado </th>
+                                <th align="center" > Distancia </th>
+                            </thead>
+                            <tbody>
+                                {% for row in cluster_table %}
+                                    <tr>
+                                        <td> {{ row.NUMERO_SECUENCIA_POLIZA }} </td>
+                                        <td> {{ row.NUMERO_POLIZA }} </td>
+                                        <td> {{ row.NUMERO_SINIESTRO }} </td>
+                                        <td> {{ row.TIPO_DOCUMENTO_TOMADOR }} </td>
+                                        <td> {{ row.TIPO_DOCUMENTO_ASEGURADO }} </td>
+                                        <td> {{ row.MUNICIPIO_SINIESTRO }} </td>
+                                        <td> {{ row.DEPARTAMENTO_SINIESTRO }} </td>
+                                        <td> {{ row.FECHA_SINIESTRO }} </td>
+                                        <td> {{ row.FECHA_AVISO }} </td>
+                                        <td> {{ row.CODIGO_COBERTURA }} </td>
+                                        <td> {{ row.CODIGO_CONCEPTO_RESERVA }} </td>
+                                        <td> {{ row.FECHA_MOV_MAX }} </td>
+                                        <td> {{ row.INCURRIDO }} </td>
+                                        <td> {{ row.LIQUIDADO }} </td>
+                                        <td> {{ row.KmeansDistance }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- MODAL MENSAJES-->
+    <div class="modal fade" id="modal-mensaje">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Mensaje del sistema</h4>
+                </div>
+                <div class="modal-body">
+                    {% for row in message %}
+                        <p><strong>{{ row }}</strong></p>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SCRIPTS -->
+    <!-- MANEJO DE TABLA -->
+    <script type="text/javascript">
+        $(function () {
+                $('#cluster_table').DataTable()
+        });
+    </script>
+
+    <!-- MANEJO DE SLIDERS -->
+    <script type="text/javascript">
+        var slider_model = document.getElementById("model_vehicle");
+        var output_model = document.getElementById("model_vehicle_span");
+
+        output_model.innerHTML = slider_model.value;
+
+        slider_model.oninput = function() {
+            output_model.innerHTML = this.value;
+        }
+
+        var slider_age_in = document.getElementById("age_insured");
+        var output_age_in = document.getElementById("age_insured_span");
+
+        output_age_in.innerHTML = slider_age_in.value;
+
+        slider_age_in.oninput = function() {
+            output_age_in.innerHTML = this.value;
+        }
+
+        var slider_strat = document.getElementById("stratum_insured");
+        var output_strat = document.getElementById("stratum_insured_span");
+
+        output_strat.innerHTML = slider_strat.value;
+
+        slider_strat.oninput = function() {
+            output_strat.innerHTML = this.value;
+        }
+
+    </script>
+    <!-- DEMO -->
+    <script type="text/javascript">
+        function getDemo()
+        {
+            $('#city_insured').val(6422);
+            $('#activity_insured').val('No aplica');
+            $('#enterprise_insured').val('No aplica');
+            $('#charge_insured').val('No aplica');
+            $('#expenses_insured').val(1250000000);
+            $('#income_insured').val(1250000000);
+            $('#assets_insured').val(30000000000);
+            $('#passives_insured').val(5000000000);
+            $('#heritage_insured').val(25000000000);
+            $('#end_policy').val(0); 
+            $('#risk_policy').val(1);
+            $('#amount_policy').val(0); 
+            $('#covert_policy').val(1); 
+            $('#reserv_policy').val(1); 
+            $('#sinister_policy').val(1);
+            $('#related_policy').val(0);
+            $('#revenue_policy').val(2);
+            $('#difend_sinister').val(68);
+            $('#difano_sinister').val(26);
+
+
+            $('#age_insured').val(16); 
+            $('#age_insured_span').text(16); 
+            $('#stratum_insured').val(0);
+            $('#stratum_insured_span').text(0);
+            $('#model_vehicle').val(2018);
+            $('#model_vehicle_span').text(2018);
+
+            $('#taken_insured').prop('checked', true);
+            $('#citypo_sinister').prop('checked', false);
+
+            $('#sex_insured option[value="No aplica"]').prop('selected', true);
+            $('#document_insured option[value="NT"]').prop('selected', true);
+            $('#civil_insured option[value="No aplica"]').prop('selected', true);
+            $('#job_insured option[value="No aplica"]').prop('selected', true);
+            $('#state_policy option[value="ATLANTICO"]').prop('selected', true);
+            $('#city_policy option[value="BARRANQUILLA"]').prop('selected', true);
+            $('#document_policy option[value="NT"]').prop('selected', true);
+            $('#sex_policy option[value="No aplica"]').prop('selected', true);
+            $('#state_sinister option[value="MAGDALENA"]').prop('selected', true);
+            $('#city_sinister option[value="CHIVOLO"]').prop('selected', true);
+            $('#brand_vehicle option[value="RENAULT"]').prop('selected', true);
+
+        }
+    </script>
+
+    <!-- LLENADO DE FORMULARIO TRAS POST -->
+    <script type="text/javascript">
+        {% if message %}
+            $(window).on('load',function(){
+                $('#modal-mensaje').modal('show');
+            });
+        {% endif %}
+        
+        {% if data_filled %}
+            {% for key, value in form_data.items %}
+                try {
+                    var form_element = {{ key }};
+                    var form_value = '{{ value }}';
+
+                    if (form_element.tagName == 'INPUT')
+                    {
+                        var type = form_element.getAttribute( 'type' );
+                        if (type == 'range' || type == 'text' )
+                        {
+                            $('#'+form_element.id).val(form_value);
+                        }
+                        if (type == 'number' )
+                        {
+                            let num = parseInt(form_value);
+                            $('#'+form_element.id).val(num);
+                        }
+
+                        if (type == 'range')
+                        {
+                            $('#'+form_element.id+'_span').text(form_value);
+                        }
+
+                        if (type == 'checkbox')
+                        {
+                            $('#'+form_element.id).prop('checked', true);
+                        }
+
+                    } else if (form_element.tagName == 'SELECT')
+                    {
+                        $('#'+ form_element.id + ' option[value="' + form_value + '"]').prop('selected', true);
+                    }
+
+                } catch (error) {
+                    
+                }
+                
+            {% endfor %}
+        {% endif %}
+    </script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">Menú Navegación</li>
+            <li>
+                <a href="{% url 'home:home' %}">
+                  <i class="fa fa-mouse-pointer"></i> <span>Inicio</span>
+                </a>
+            </li>
+            <li class="active treeview">
+                <a href="#">
+                  <i class="fa fa-car"></i> <span>Seguros Todo Riesgo</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <!--
+                  <li><a href="{% url 'all_risk:1' %}"><i class="fa fa-map-o"></i> Self-Organizing maps </a></li>
+                  <li><a href="{% url 'all_risk:2' %}"><i class="fa fa-table"></i> Siniestro vs puntaje </a></li>
+                  -->
+                  <li><a href="{% url 'all_risk:4' %}"><i class="fa fa-map-o"></i>Menú Operador </a></li>
+                  <li><a href="{% url 'all_risk:3' %}"><i class="fa fa-table"></i>Menú Analista </a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-ambulance"></i>
+                  <span>Seguros SOAT</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <!--
+                  <li><a href="{% url 'soat:s1' %}"><i class="fa fa-credit-card"></i> Resultado Clustering </a></li>
+                  -->
+                  <li><a href="{% url 'soat:s2' %}"><i class="fa fa-credit-card"></i>Clustering SOAT </a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</aside>

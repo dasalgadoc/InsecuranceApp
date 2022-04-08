@@ -1,0 +1,139 @@
+/*
+    Custom 01: Graphs
+*/
+
+.fit_chart{
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto
+}
+
+.fit_chart_2{
+    width: 35%; 
+    height: auto; 
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto
+}
+
+/*
+    Custom 02: Forms padding
+*/
+
+
+.form_padding {
+    padding-left: 1em;
+}
+
+/*
+    Custom 03: Sliders for forms
+*/
+
+.custom_slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+ }
+  
+.custom_slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #3c8dbc;
+  cursor: pointer;
+}
+
+.custom_slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #3c8dbc;
+  cursor: pointer;
+}
+
+/*
+    Custom 04: Center Button
+*/
+
+.custom_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom_center > button {
+  margin-top: 25px;
+}
+
+/*
+    Custom 05: Toggle for forms
+*/
+
+  .custom_switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+  }
+  
+  .custom_switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .custom_toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .custom_toggle:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .custom_toggle {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .custom_toggle {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .custom_toggle:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+  
+  .custom_toggle.round {
+    border-radius: 26px;
+  }
+  
+  .custom_toggle.round:before {
+    border-radius: 50%;
+  }

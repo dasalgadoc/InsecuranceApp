@@ -1,0 +1,510 @@
+{% extends "main_app/base.html" %}
+
+<!-- Inject code in block -->
+{% block head_content %}
+    <title> Todo Riesgo: Proyecto Fraude - Seguros Bolívar </title>
+{% endblock %}
+
+{% block container %}
+    <h1> Seguros todo riesgo: 
+        <small>Mapas Autoorganizados</small>
+    </h1>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-primary collapsed-box">
+                    <div class="box-header">
+                        <i class="fa fa-line-chart"></i>
+                        <h3 class="box-title">Datos de siniestro</h3>
+                        
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>          
+                    <div style="display: none;" class="box-body">
+                        <div class="row" style="margin-right: 1em;">
+                            <button type="submit" class="btn btn-primary pull-right" onclick="getDemo()"><i class="fa fa-laptop"></i>   Cargar Demo</button>
+                        </div>
+                        <form method="POST" action="{% url 'all_risk:1' %}">               
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    
+                                    <h4><i class="fa fa-user-plus"></i><strong>   Datos Asegurado</strong></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;" >
+                                                <label>Ciudad: </label>
+                                                <input type="number" class="form-control" id="city_insured" name="city_insured" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Edad: </label>
+                                                <input type="number" class="form-control" id="age_insured" name="age_insured" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Género: </label>
+                                                <input type="text" class="form-control" id="sex_insured" name="sex_insured" placeholder="M/F"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Estado civil: </label>
+                                                <input type="text" class="form-control" id="civil_insured" name="civil_insured" placeholder="Ingrese estado civil">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Vinculación laboral: </label>
+                                                <input type="text" class="form-control" id="job_insured" name="job_insured"  placeholder="Ingrese vinculación">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Bonus Malus: </label>
+                                                <input type="number" class="form-control" id="bm_insured" name="bm_insured" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Ingresos: </label>
+                                                <input type="number" class="form-control" id="income_insured" name="income_insured" step="0.1" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Egresos: </label>
+                                                <input type="number" class="form-control" id="expenses_insured" name="expenses_insured" step="0.1" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Valor activos: </label>
+                                                <input type="number" class="form-control" id="assets_insured" name="assets_insured" step="0.1" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Valor Pasivos: </label>
+                                                <input type="number" class="form-control" id="passives_insured" name="passives_insured" step="0.1" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Valor Patrimonio: </label>
+                                        <input type="number" class="form-control" id="heritage_insured" name="heritage_insured" step="0.1" placeholder="Ingrese número"  >
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Acierta Plus: </label>
+                                                <input type="number" class="form-control" id="acierta_insured" name="acierta_insured" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Quanto: </label>
+                                                <input type="number" class="form-control" id="quanto_insured" name="quanto_insured" step="0.1" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    
+                                    <h4><i class="fa fa-car"></i><strong>   Datos Vehículo</strong></h4>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Tipo: </label>
+                                        <input type="text" class="form-control" id="type_vehicle" name="type_vehicle" placeholder="Liviano/Pesado/Moto" >
+                                    </div>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Marca: </label>
+                                        <input type="text" class="form-control" id="brand_vehicle" name="brand_vehicle" placeholder="Nombre marca"  >
+                                    </div>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Línea: </label>
+                                        <input type="text" class="form-control" id="line_vehicle" name="line_vehicle" placeholder="Línea de vehículo"  >
+                                    </div>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Modelo: </label>
+                                        <input type="number" class="form-control" id="model_vehicle" name="model_vehicle" placeholder="Ingrese año"  >
+                                    </div>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Cilindraje: </label>
+                                        <input type="number" class="form-control" id="cylinder_vehicle" name="cylinder_vehicle" placeholder="Ingrese número"  >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    
+                                    <h4><i class="fa fa-file-text"></i><strong>   Datos póliza</strong></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Departamento: </label>
+                                                <input type="text" class="form-control" id="state_policy" name="state_policy" placeholder="Ingrese departamento" >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Municipio: </label>
+                                                <input type="number" class="form-control" id="city_policy" name="city_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="padding-left: 1em;">
+                                        <label>Número endoso: </label>
+                                        <input type="number" class="form-control" id="code_policy"  name="code_policy" step="0.1" placeholder="Ingrese número endoso"  >
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Valor asegurado vehículo: </label>
+                                                <input type="number" class="form-control" id="amount_policy" name="amount_policy" placeholder="Ingrese valor"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Valor asegurado accesorios: </label>
+                                                <input type="number" class="form-control" id="amount_a_policy" name="amount_a_policy" step="0.1" placeholder="Ingrese valor"  >
+                                            </div>             
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Tomador es igual a póliza: </label>
+                                                <input type="number" class="form-control" id="taken_policy" name="taken_policy" placeholder="0/1"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Fecha emisión (días): </label>
+                                                <input type="number" class="form-control" id="date_policy" name="date_policy" placeholder="Cantidad de días"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Código uso: </label>
+                                                <input type="number" class="form-control" id="use_policy" name="use_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Código tipo: </label>
+                                                <input type="number" class="form-control" id="type_policy" name="type_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Altura póliza: </label>
+                                                <input type="number" class="form-control" id="height_policy" name="height_policy" placeholder="Ingrese número"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Canal póliza: </label>
+                                                <input type="number" class="form-control" id="channel_policy" name="channel_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Código subproducto: </label>
+                                                <input type="text" class="form-control" id="subproduct_policy" name="subproduct_policy" placeholder="Ingrese código"  >
+                                            </div>                                            
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Código cobertura frecuente: </label>
+                                                <input type="number" class="form-control" id="covert_policy" name="covert_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Cantidad cobertura involucradas: </label>
+                                                <input type="number" class="form-control" id="involved_policy" name="involved_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Código concepto reserva: </label>
+                                                <input type="number" class="form-control" id="concept_policy" name="concept_policy" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <h4><i class="fa fa-remove"></i><strong>   Datos Siniestro</strong></h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Departamento: </label>
+                                                <input type="text" class="form-control" id="state_sinister" name="state_sinister" placeholder="Ingrese departamento" >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Municipio: </label>
+                                                <input type="number" class="form-control" id="city_sinister" name="city_sinister" placeholder="Ingrese código"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Género conductor: </label>
+                                                <input type="text" class="form-control" id="gender_sinister" name="gender_sinister" placeholder="M/F" >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Edad conductor: </label>
+                                                <input type="number" class="form-control" id="age_sinister" name="age_sinister" placeholder="Ingrese edad"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Reclamos anteriores: </label>
+                                                <input type="number" class="form-control" id="claims_sinister" name="claims_sinister" placeholder="Cantidad reclamos"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Estado siniestro: </label>
+                                                <input type="text" class="form-control" id="stage_sinister" name="stage_sinister" placeholder="Ingrese estado reclamación" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Valor incurrido: </label>
+                                                <input type="number" class="form-control" id="incurred_sinister" name="incurred_sinister" placeholder="Valor incurrido"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Total involucrados: </label>
+                                                <input type="number" class="form-control" id="involved_sinister" name="involved_sinister" placeholder="Ingrese número personas"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Tomador-Asegurado igual: </label>
+                                                <input type="number" class="form-control" id="taker_a_sinister" name="taker_a_sinister" placeholder="0/1"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Tomador-Beneficiario igual: </label>
+                                                <input type="number" class="form-control" id="taker_b_sinister" name="taker_b_sinister" placeholder="0/1"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Asegurado-Beneficiario igual: </label>
+                                                <input type="number" class="form-control" id="insured_sinister" name="insured_sinister" placeholder="0/1"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Municipio-Siniestro igual: </label>
+                                                <input type="number" class="form-control" id="town_sinister" name="town_sinister" placeholder="0/1"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Fecha máxima: </label>
+                                                <input type="number" class="form-control" id="date_sinister" name="date_sinister" placeholder="Ingrese cantidad días"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Diferencia aviso siniestro: </label>
+                                                <input type="number" class="form-control" id="annon_sinister" name="annon_sinister" placeholder="Diferencia en días"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Diferencia inicio endoso: </label>
+                                                <input type="number" class="form-control" id="start_sinister" name="start_sinister" placeholder="Diferencia en días"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group" style="padding-left: 1em;">
+                                                <label>Diferencia fin endoso: </label>
+                                                <input type="number" class="form-control" id="end_sinister" name="end_sinister" placeholder="Diferencia en días"  >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+
+                            <div class="row" style="margin-right: 1em;">
+                                <button type="submit" class="btn btn-success pull-right" > <i class="fa fa-mail-reply"></i>  Ubicar punto</button>
+                            </div>
+                        </form>                           
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <i class="fa fa-map-o"></i>
+                        <h3 class="box-title">Mapa Auto-organizativo</h3>
+                        
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% if chart %}
+                            <img src="data:image/png;base64,{{chart|safe}}" class="fit_chart" >
+                        {% endif %}    
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="box box-danger">
+                    <div class="box-header">
+                        <i class="fa fa-bar-chart"></i>
+                        <h3 class="box-title">Mapa de Frecuencias</h3>
+                        
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% if chart_2 %}
+                            <img src="data:image/png;base64,{{chart_2|safe}}" class="fit_chart" >
+                        {% endif %} 
+                    </div>
+                </div>    
+            </div>
+            
+        </div>
+        
+    </section>
+
+    <div class="modal fade" id="modal-success">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cálculo en el mapa Auto-organizativo</h4>
+                </div>
+                <div class="modal-body">
+                    {% if message %}
+                        <p>La información ingresada ubicaría el punto en la coordenbdada <strong>{{ message }}</strong></p>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        {% if message %}
+            $(window).on('load',function(){
+                $('#modal-success').modal('show');
+            });
+        {% endif %}
+
+        function getDemo()
+        {
+            $('#city_insured').val(82);
+            $('#age_insured').val(20);
+            $('#sex_insured').val('M');
+            $('#civil_insured').val('SOLTERO');
+            $('#job_insured').val('I');
+            $('#bm_insured').val(-35);
+            $('#income_insured').val(1006.4);
+            $('#expenses_insured').val(-1);
+            $('#assets_insured').val(100000000);
+            $('#passives_insured').val(-1);
+            $('#heritage_insured').val(-1);
+            $('#acierta_insured').val(723);
+            $('#quanto_insured').val(13316.8);
+
+            $('#type_vehicle').val('Liviano');
+            $('#brand_vehicle').val('CHEVROLET');
+            $('#line_vehicle').val('CAPTIVA');
+            $('#model_vehicle').val(2011);
+            $('#cylinder_vehicle').val(2997);
+
+            $('#state_policy').val('VALLE DEL CAUCA');
+            $('#city_policy').val(30000);
+            $('#code_policy').val(0.0);
+            $('#amount_policy').val(1000000);
+            $('#amount_a_policy').val(0.0);
+            $('#taken_policy').val(0);
+            $('#date_policy').val(17878);
+            $('#use_policy').val(31);
+            $('#type_policy').val(1);
+            $('#height_policy').val(1);
+            $('#channel_policy').val(1540);
+            $('#subproduct_policy').val('AA');
+            $('#covert_policy').val(372);
+            $('#involved_policy').val(1);
+            $('#concept_policy').val(8);
+
+            $('#state_sinister').val('VALLE DEL CAUCA');
+            $('#city_sinister').val(30000);
+            $('#gender_sinister').val('M');
+            $('#age_sinister').val(20);
+            $('#claims_sinister').val(0);
+            $('#stage_sinister').val('PAGADO');
+            $('#incurred_sinister').val(22810555);
+            $('#involved_sinister').val(5);
+            $('#taker_a_sinister').val(1);
+            $('#taker_b_sinister').val(1);
+            $('#insured_sinister').val(0);
+            $('#town_sinister').val(1);
+            $('#date_sinister').val(18340);
+            $('#annon_sinister').val(0);
+            $('#start_sinister').val(296);
+            $('#end_sinister').val(69);
+
+
+        }
+    </script>
+
+{% endblock %}
